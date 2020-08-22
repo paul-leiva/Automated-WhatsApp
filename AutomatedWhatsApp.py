@@ -3,22 +3,45 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from tkinter import *
-from tkinter.ttk import *
+#from tkinter.ttk import *
 from time import localtime, strftime
 import datetime
-
-#stuff = [[6, "London", "England"], [1, "New York", "United States"], [3, "Ottawa", "Canada"]]
-
-#stuff.sort() # default sort by first element
-#stuff.sort(key=lambda x: x[2]) # sort by element at index[1] in each tuple
-#print(stuff)
 
 current = strftime("%H:%M", localtime())
 print(current)
 
 to_send = []
 
-practice = True
+practice = False
+
+root = Tk()
+root.title("AutomatedWhatsApp.py") 
+root.geometry("600x600") 
+
+schedule_frame = LabelFrame(root, text = "Schedule a Message", height=200, pady=5, padx = 5)
+queue_frame = LabelFrame(root, text = "Queued Messages", height=200, pady=5, padx=5)
+
+root.grid_rowconfigure(2, weight=1)
+root.grid_columnconfigure(3, weight=1)
+
+schedule_frame.grid(row=0, padx=5, sticky=EW)
+queue_frame.grid(row=1, padx=5, sticky=EW)
+
+contact_label = Label(schedule_frame, text ='Contact name or #: ')
+time_label = Label(schedule_frame, text ='Time to send (24HR:MM): ')
+msg_label = Label(schedule_frame, text ='Message to send: ')
+contact = Entry(schedule_frame, width=30)
+time = Entry(schedule_frame, width = 10)
+message = Text(schedule_frame, width=50, height=10)
+
+contact_label.grid(row = 0, column = 0, padx=5)
+contact.grid(row=0, column=1, columnspan=1, padx=5)
+time_label.grid(row = 0, column=2)
+time.grid(row=0, column=3, sticky="w")
+msg_label.grid(row=1, column=0)
+message.grid(row=2, column=0, columnspan=3)
+
+root.mainloop()
 
 while (practice == True):
    contact = input('Enter name of contact or group: ')
@@ -41,16 +64,6 @@ while (practice == True):
       print(to_send)
 
 
-
-today = datetime.date.today()
-print(today)
-print(today + datetime.timedelta(days=1)) #tomorrow
-
-# use 24-hour time
-AMmessages = [['Ari Heyd','Hello at last','08/21/20 05:55'], ['Ari Heyd','Hello','08/21/20 17:45'], ['Ari Heyd','Hello again','08/22/20 17:35']]
-AMmessages.sort(key=lambda x: x[2])
-print(AMmessages)
-#print(messages[1][2]-current)
 """
 def schedule_message():
    # Label(window, text="Time to Schedule the Message").grid(row = 4, column = 0)
