@@ -7,22 +7,43 @@ from tkinter import *
 from time import localtime, strftime
 import datetime
 
+def schedule_message():
+   queue_frame.destroy()
+   q = LabelFrame(window, text = "Queued Messages", height=200, pady=5, padx=5)
+   q.grid(row=1, padx=5, sticky=EW)
+   recipient = Label(q, text ='Recipient:')
+   sending_time = Label(q, text ='Will be sent at: ')
+   msg = Label(q, text ='Message: ')
+   
+   recipient.grid(row = 0, column = 0, padx=5)
+   sending_time.grid(row = 0, column=1)
+   msg.grid(row=0, column=2)
+   Label(q, text=contact.get()).grid(row = 4, column = 0)
+   Label(q, text=time.get()).grid(row = 4, column = 1)
+   Label(q, text=message.get("1.0", END), wraplength=500, justify="left", bg="green").grid(row = 4, column = 2, columnspan=2)
+   
+def toggle_state(*_):
+   if(contact.var.get() and time.var.get()):
+      schedule_button['state'] = 'normal'
+   else:
+      schedule_button['state'] = 'disabled'
+
 current = strftime("%H:%M", localtime())
 print(current)
 
-to_send = []
+to_send = []#["2020/08/24", "08:08", "ari", "Hello"]] # set of queued messages
 
 practice = False
 
-root = Tk()
-root.title("AutomatedWhatsApp.py") 
-root.geometry("600x600") 
+window = Tk()
+window.title("AutomatedWhatsApp.py")
+window.geometry("600x600") 
 
-schedule_frame = LabelFrame(root, text = "Schedule a Message", height=200, pady=5, padx = 5)
-queue_frame = LabelFrame(root, text = "Queued Messages", height=200, pady=5, padx=5)
+schedule_frame = LabelFrame(window, text = "Schedule a Message", height=200, pady=5, padx = 5)
+queue_frame = LabelFrame(window, text = "Queued Messages", height=200, pady=5, padx=5)
 
-root.grid_rowconfigure(2, weight=1)
-root.grid_columnconfigure(3, weight=1)
+window.grid_rowconfigure(2, weight=1)
+window.grid_columnconfigure(3, weight=1)
 
 schedule_frame.grid(row=0, padx=5, sticky=EW)
 queue_frame.grid(row=1, padx=5, sticky=EW)
@@ -33,6 +54,7 @@ msg_label = Label(schedule_frame, text ='Message to send: ')
 contact = Entry(schedule_frame, width=30)
 time = Entry(schedule_frame, width = 10)
 message = Text(schedule_frame, width=50, height=10)
+schedule_button = Button(schedule_frame, text ="Schedule Message", command = schedule_message)
 
 contact_label.grid(row = 0, column = 0, padx=5)
 contact.grid(row=0, column=1, columnspan=1, padx=5)
@@ -40,16 +62,34 @@ time_label.grid(row = 0, column=2)
 time.grid(row=0, column=3, sticky="w")
 msg_label.grid(row=1, column=0)
 message.grid(row=2, column=0, columnspan=3)
+schedule_button.grid(row=3, column=3, sticky="SE")
+schedule_button['state']='disabled'
 
-root.mainloop()
+contact.var = StringVar()
+contact['textvariable']=contact.var
+contact.var.trace_add('write', toggle_state)
 
-while (practice == True):
-   contact = input('Enter name of contact or group: ')
-   message = input('Enter your message: ')
-   time = input('Enter time to send (24H:MM): ')
-   now = strftime("%H:%M", localtime())
+time.var = StringVar()
+time['textvariable']=time.var
+time.var.trace_add('write', toggle_state)
+
+recipient = Label(queue_frame, text ='Recipient:')
+sending_time = Label(queue_frame, text ='Will be sent at: ')
+msg = Label(queue_frame, text ='Message: ')
+
+recipient.grid(row = 0, column = 0, padx=5)
+sending_time.grid(row = 0, column=1)
+msg.grid(row=0, column=2)
+
+for x in to_send:
+   Label(queue_frame, text = str(to_send))
+
+window.mainloop()
+
+while (to_send != []):
+   now = strftime('%H:%M', localtime())
    #if (time < now):
-   if (time < strftime("%H:%M", localtime())):
+   if (str(time) < strftime("%H:%M", localtime())):
       date = datetime.date.today() + datetime.timedelta(days=1)
    else:
       date = datetime.date.today()
@@ -58,17 +98,12 @@ while (practice == True):
    print(to_send)
    print(to_send[0][1])
    next = to_send[0][1]
-   if (strftime("%H:%M", localtime()) == to_send[0][1]):
-      print(to_send[0])
-      to_send.pop(0)
-      print(to_send)
+   #if (strftime("%H:%M", localtime()) == to_send[0][1]):
+      #print(to_send[0])
+   to_send.pop(0)
 
 
 """
-def schedule_message():
-   # Label(window, text="Time to Schedule the Message").grid(row = 4, column = 0)
-
-
 def sendMessage():
    PATH = "C:\Program Files (x86)\chromedriver.exe"
    driver = webdriver.Chrome(PATH)
