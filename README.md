@@ -8,4 +8,4 @@ In order to run this program successfully, you will need to download the Chrome 
 
 ## How to Enter data into the fields:
 
-![GUI](/GUIboxed.jpg?raw=true "You should see this GUI")
+![GUI](/GUIboxed.jpg?raw=true "You should see this GUI") JJJJJ
