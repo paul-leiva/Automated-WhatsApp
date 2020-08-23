@@ -4,10 +4,10 @@
 ###### DISCLAIMER: 
 This is a program built for demonstrational and project-purposes. **PLEASE DO NOT USE THIS TO CONTACT EMERGENCY SERVICES OR FOR OTHER VERY URGENT MATTERS.** Thank you.
  
-In order to run this program successfully, you will need to download the [Chrome WebDriver (ChromeDriver). This is available here](https://chromedriver.chromium.org/downloads) under "Current Releases"; choose the right one to install for your platform. If you are on a Windows machine, unzip the file and move chromedriver.exe to your "Program Files (x86)" folder; if you do this, you shouldn't have to touch the code. Otherwise, you will have to modify the path in line 49 based on what you did.
+In order to run this program successfully, you will need to download the [Chrome WebDriver (ChromeDriver). This is available here](https://chromedriver.chromium.org/downloads) under "Current Releases"; choose the right one to install for your platform. If you are on a Windows machine, unzip the file and move chromedriver.exe to your "Program Files (x86)" folder; if you do this, you shouldn't have to touch the code. Otherwise, you will have to modify the `PATH` in line 49 based on what you did.
 
 ## How to Enter data into the fields:
-You should see a box that looks like this within 10-15 seconds of running the program. If you do, that means you set the path correctly for the driver.
+You should see a box that looks like the one below within 10-15 seconds of running the program. If you do, that means you set the `PATH` correctly for the driver.
 
 There are three fields of concern when scheduling a message and they should be formatted as follows:
 
@@ -21,3 +21,6 @@ Once you have entered data in every field, you should then be able to hit the *S
 ![GUI](/GUIboxed.jpg?raw=true "You should see this GUI")
 
 ## Known Bugs and Issues:
+1. You cannot send a message to someone unless you have already sent them a message. If you are going to send a message to someone who is a new contact or you have otherwise not sent a message to already, you must start a conversation on another device before using this tool.
+2. If your contacts are in a group chat or other conversation with multiple participants, then your message may be sent to the group chat instead of to the individual contact. So test it out before you send something sensitive.
+3. If you are struggling to get the GUI to display, then you are probably not setting the `PATH` correctly. Go and set the `PATH` in line 49, which by default is set to `PATH = "C:\Program Files (x86)\chromedriver.exe"`.
