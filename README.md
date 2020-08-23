@@ -6,6 +6,9 @@ This is a program built for demonstrational and project-purposes. **PLEASE DO NO
  
 In order to run this program successfully, you will need to download the [Chrome WebDriver (ChromeDriver). This is available here](https://chromedriver.chromium.org/downloads) under "Current Releases"; choose the right one to install for your platform. If you are on a Windows machine, unzip the file and move chromedriver.exe to your "Program Files (x86)" folder; if you do this, you shouldn't have to touch the code. Otherwise, you will have to modify the `PATH` in line 49 based on what you did. (`PATH = "C:\Program Files (x86)\chromedriver.exe"`)
 
+## Running the program:
+All you need to do is run Automated-WhatsApp.py. You can run the file in an IDE of your choosing or from your terminal by executing `python Automated-WhatsApp.py`.
+
 ## How to Enter data into the fields:
 You should see a box that looks like the one below within 10-15 seconds of running the program. If you do, that means you set the `PATH` correctly for the driver.
 
