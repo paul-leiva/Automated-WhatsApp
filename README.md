@@ -13,8 +13,10 @@ There are three fields of concern when scheduling a message and they should be f
 
 Contact Name or # | Time to Send | Messsage |
 ------------ | ------------- | -------------
-You must enter either a phone number (w/ country code) OR <br> the exact name of the person in your contacts | Must be entered in 24-hour format | Can contain only text
-Ex: Joe Smith, +1 (123) 456-7890 | Ex: 07:30, 18:45 | Hello there, friend.
+You must enter either a phone number (w/ country code) OR <br> the exact name of the person in your contacts <br> Your entry here should match the conversation in your WhatsApp, character-for-character. | Must be entered in **24-hour format**<br>(Military Time)| Can contain **ONLY TEXT**<br>NO images, files, or attachments
+Ex: Joe Smith, +1 (123) 456-7890<br> For a list of country codes, [click here.](https://countrycode.org/) | Ex: 07:30, 18:45 | Hello there, friend.
+
+Once you have entered data in every field, you should then be able to hit the *Schedule Message* button and your message will enter into the queue.
 
 ![GUI](/GUIboxed.jpg?raw=true "You should see this GUI")
 
