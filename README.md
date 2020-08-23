@@ -23,4 +23,4 @@ Once you have entered data in every field, you should then be able to hit the *S
 ## Known Bugs and Issues:
 1. You cannot send a message to someone unless you have already sent them a message. If you are going to send a message to someone who is a new contact or you have otherwise not sent a message to already, you must start a conversation on another device before using this tool.
 2. If your contacts are in a group chat or other conversation with multiple participants, then your message may be sent to the group chat instead of to the individual contact. So test it out before you send something sensitive.
-3. If you are struggling to get the GUI to display, then you are probably not setting the `PATH` correctly. Go and set the `PATH` in line 49, which by default is set to `PATH = "C:\Program Files (x86)\chromedriver.exe"`.
+3. If you are struggling to get the GUI to display, then you are probably not setting the `PATH` correctly. Try to re-set the `PATH` in line 49, which by default is set to `PATH = "C:\Program Files (x86)\chromedriver.exe"`.
