@@ -1,4 +1,4 @@
-# A program to automate and schedule your WhatsApp messages
+# A program to automate and schedule your WhatsApp messages within the next 24 hours
 # Created by Paul Leiva | Florida International University, Miami, FL, United States
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -11,7 +11,7 @@ import time
 import datetime
 
 def schedule_message():
-   queue_frame.destroy()
+   queue_frame.destroy() # get rid of the old queued messages when a new one is scheduled
    q.grid(row=1, padx=5, sticky=EW)
    recipient_labelq = Label(q, text ='Recipient:')
    time_labelq = Label(q, text ='Will be sent at: ')
@@ -23,55 +23,63 @@ def schedule_message():
    
    recipient = contact.get()
    messageq = message.get("1.0", END)
-   if (str(time_entry.get()) < strftime("%H:%M", localtime())):
-      date_q = datetime.date.today() + datetime.timedelta(days=1)
-   else:
-      date_q = datetime.date.today()
-   to_send.append([str(date_q), time_entry.get(), recipient, message.get("1.0", END)])
-   to_send.sort()
-   print(to_send)
+   if (str(time_entry.get()) < strftime("%H:%M", localtime())): # if the time entered for the message is earlier than the current time,
+      date_q = datetime.date.today() + datetime.timedelta(days=1) # the message will be scheduled for that time tomorrow (the next occurrence of said time)
+   else: # if the time enteres is later than the current time
+      date_q = datetime.date.today() # the message will be scheduled for that time later today
+   to_send.append([str(date_q), time_entry.get(), recipient, message.get("1.0", END)]) # add the message to the queue of messages
+   to_send.sort() # sort the queue (by date, then by time)
+   print(to_send) # prints your ordered messages on the console
 
-   for x in range(len(to_send)):
+   for x in range(len(to_send)): # Loop to redo the queue frame of messages
       Label(q, text=to_send[x][2]).grid(row = 4+x, column = 0) # recipient
       Label(q, text=to_send[x][1]).grid(row = 4+x, column = 1) # time to send
       Label(q, text=to_send[x][3], wraplength=500, justify="left").grid(row = 4+x, column = 2, columnspan=2) # message
 
-def check_time():
-   if (to_send != []):
-      if (strftime("%H:%M", localtime()) == to_send[0][1]):
-         print(to_send[0][1])
-         send_Message()
-   window.after(10000, check_time)
+def check_time(): #this method checks if a message is to be sent every 10 seconds
+   if (to_send != []): # if the queue of messages is NOT empty
+      if (strftime("%H:%M", localtime()) == to_send[0][1]): # once the next queued message's time is the current one
+         print(to_send[0][1]) # print for reference
+         send_Message() # send this message
+   window.after(10000, check_time) # 10-second loop
    
 def send_Message():
+   # This path is the place where you have the Chrome driver stored. 
+   # You may need to change this PATH variable if you download yours to a different location
    PATH = "C:\Program Files (x86)\chromedriver.exe"
    driver = webdriver.Chrome(PATH)
-   driver.get('https://web.whatsapp.com/')
+   driver.get('https://web.whatsapp.com/') #initiate the driver to pull up the web page
    
+   # This exception handler is designed to give your machine 30 seconds to pull up the WhatsApp Login page and login before sending the message
    try:
       main = WebDriverWait(driver, 30).until(
          EC.presence_of_element_located((By.CLASS_NAME, "_210SC"))
       )
    except:
-       driver.quit()
+       driver.quit() # if the login page isn't passed in 30 seconds, the window will close
    
+   # This variable is the placeholder on the page for finding the recipient of the message (name or number)
    user = driver.find_element_by_xpath('//span[@title = "{}" ]'.format(str(to_send[0][2])))
    user.click()
    
-   time.sleep(1)
+   time.sleep(1) # allow this process some time to do the clicking
    
+   # This variable is the placeholder for the message box. Text messages only can be sent.
    message_box = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div')
-   time.sleep(2)
-   message_box.send_keys(to_send[0][3])
+   time.sleep(2) # waiting time
+   message_box.send_keys(to_send[0][3]) # insert the message string into the message_box
    try:
-      button = driver.find_element_by_class_name('_1U1xa')
-      button.click()
+      button = driver.find_element_by_class_name('_1U1xa') # find the send button
+      button.click() # click the send button
    except:
-      print('ok')
-   driver.quit()
+      print('ok') # this exception handles an unknown csselement finding error
+   driver.quit() # close the window
+   
+   #print notification of message being sent
    print('Your message: ' + to_send[0][3] + ' was sent to ' + to_send[0][2])
    to_send.pop(0)
    
+   #redo the queue of messages
    queue_frame.destroy()
    q.grid(row=1, padx=5, sticky=EW)
    recipient_labelq = Label(q, text ='Recipient:')
@@ -104,9 +112,7 @@ def toggle_state(*_):
 current = strftime("%H:%M", localtime())
 print(current)
 
-to_send = []
-
-practice = False
+to_send = [] # A list of messages stored as: [date, time, recipient/contact, message]
 
 window = Tk()
 window.title("AutomatedWhatsApp.py")
