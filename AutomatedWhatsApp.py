@@ -109,26 +109,29 @@ def toggle_state(*_):
    else:
       schedule_button['state'] = 'disabled'
 
+#print the current time for reference when the program starts
 current = strftime("%H:%M", localtime())
 print(current)
 
 to_send = [] # A list of messages stored as: [date, time, recipient/contact, message]
 
-window = Tk()
+window = Tk() # make a GUI window
 window.title("AutomatedWhatsApp.py")
 window.geometry("600x600") 
 
 q = LabelFrame(window, text = "Queued Messages", height=200, pady=5, padx=5)
 
-schedule_frame = LabelFrame(window, text = "Schedule a Message", height=200, pady=5, padx = 5)
-queue_frame = LabelFrame(window, text = "Queued Messages", height=200, pady=5, padx=5)
+schedule_frame = LabelFrame(window, text = "Schedule a Message", height=200, pady=5, padx = 5) # top frame
+queue_frame = LabelFrame(window, text = "Queued Messages", height=200, pady=5, padx=5) # bottom frame
 
 window.grid_rowconfigure(2, weight=1)
 window.grid_columnconfigure(3, weight=1)
 
+#situate the frames
 schedule_frame.grid(row=0, padx=5, sticky=EW)
 queue_frame.grid(row=1, padx=5, sticky=EW)
 
+# Make labels, buttons, and entry boxes
 contact_label = Label(schedule_frame, text ='Contact name or #: ')
 time_label = Label(schedule_frame, text ='Time to send (24HR:MM): ')
 msg_label = Label(schedule_frame, text ='Message to send: ')
@@ -137,6 +140,7 @@ time_entry = Entry(schedule_frame, width = 10)
 message = Text(schedule_frame, width=50, height=10)
 schedule_button = Button(schedule_frame, text ="Schedule Message", command = schedule_message)
 
+# Positioning
 contact_label.grid(row = 0, column = 0, padx=5)
 contact.grid(row=0, column=1, columnspan=1, padx=5)
 time_label.grid(row = 0, column=2)
@@ -146,6 +150,7 @@ message.grid(row=2, column=0, columnspan=3)
 schedule_button.grid(row=3, column=3, sticky="SE")
 schedule_button['state']='disabled'
 
+# This process allows our 'Schedule Message' button to be unclickable until you fill the contact and time_entry fields
 contact.var = StringVar()
 contact['textvariable']=contact.var
 contact.var.trace_add('write', toggle_state)
@@ -154,14 +159,16 @@ time_entry.var = StringVar()
 time_entry['textvariable']=time_entry.var
 time_entry.var.trace_add('write', toggle_state)
 
+# Queue frame labels
 recipient = Label(queue_frame, text ='Recipient:')
 sending_time = Label(queue_frame, text ='Will be sent at: ')
 msg = Label(queue_frame, text ='Message: ')
 
+# Positioning
 recipient.grid(row = 0, column = 0, padx=5)
 sending_time.grid(row = 0, column=1)
 msg.grid(row=0, column=2)
 
-check_time()
+check_time() # process to check the time as part of mainloop
       
-window.mainloop()
+window.mainloop() # allows the GUI window to display
