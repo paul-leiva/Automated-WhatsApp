@@ -13,7 +13,7 @@ There are three fields of concern when scheduling a message and they should be f
 
 Contact Name or # | Time to Send | Messsage |
 ------------ | ------------- | -------------
-You must enter either a phone number (w/ country code) OR \nthe exact name of the person in your contacts | Must be entered in 24-hour format | Can contain only text
+You must enter either a phone number (w/ country code) OR <br> the exact name of the person in your contacts | Must be entered in 24-hour format | Can contain only text
 Ex: Joe Smith, +1 (123) 456-7890 | Ex: 07:30, 18:45 | Hello there, friend.
 
 ![GUI](/GUIboxed.jpg?raw=true "You should see this GUI")
